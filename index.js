@@ -7,6 +7,10 @@ const { createProduct } = require("./controller/Product");
 const productsRouter = require("./routes/Products");
 const categoriesRouter = require("./routes/Categories");
 const brandsRouter = require("./routes/Brands");
+const usersRouter = require("./routes/Users");
+const authRouter = require("./routes/Auth");
+const cartRouter = require("./routes/Cart");
+const ordersRouter = require("./routes/Order");
 
 // mongoose live db link
 // mongodb+srv://anilsebastin:<password>@cluster0.2jgtikz.mongodb.net/
@@ -18,9 +22,6 @@ server.use(
   })
 );
 server.use(express.json()); // to parse req.body
-server.use("/products", productsRouter.router);
-server.use("/categories", categoriesRouter.router);
-server.use("/brands", brandsRouter.router);
 
 main().catch((err) => console.log(err));
 
@@ -33,7 +34,13 @@ server.get("/", (req, res) => {
   res.json({ status: "success" });
 });
 
-server.post("/products", createProduct);
+server.use("/products", productsRouter.router);
+server.use("/categories", categoriesRouter.router);
+server.use("/brands", brandsRouter.router);
+server.use("/users", usersRouter.router);
+server.use("/auth", authRouter.router);
+server.use("/cart", cartRouter.router);
+server.use("/orders", ordersRouter.router);
 
 server.listen(8080, () => {
   console.log("server started");
